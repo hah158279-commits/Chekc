@@ -1,0 +1,12 @@
+{
+  "name": "getkey-app1-checker-huivip",
+  "version": "2.0.0",
+  "private": true,
+  "description": "GETKEY Checker with shared Huivip backend",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
