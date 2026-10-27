@@ -1,12 +1,1 @@
-{
-  "name": "getkey-app1-checker-huivip",
-  "version": "2.0.0",
-  "private": true,
-  "description": "GETKEY Checker with shared Huivip backend",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "engines": {
-    "node": ">=18"
-  }
-}
+{"name":"hui-meta-getkey","version":"1.0.0","private":true,"description":"후이 meta + GetKey prototype with server-side key management","scripts":{"start":"node server.js"},"engines":{"node":">=18"}}

@@ -1,18 +1,20 @@
-# GETKEY Checker — 후이vip👑
+# GETKEY_App2_Admin_Huivip
+
+App 2 GETKEY quản trị hiện tại + quản lý key + tích hợp xu/mã giảm giá
 
 ## Chạy thử
 1. Cài Node.js 18 trở lên.
-2. Sao chép `.env.example` thành `.env`. Đặt `ADMIN_PASSWORD`, `APP_PASSWORD`, `SESSION_SECRET` thành giá trị riêng, dài và khó đoán.
+2. Sao chép `.env.example` thành `.env`, đổi `ADMIN_PASSWORD`, `APP_PASSWORD`, `SESSION_SECRET`.
 3. Chạy `npm start`.
-4. Mở `/getkey/`. Cửa admin: `/admin-door/`.
+4. Mở `/getkey/`.
 
-## Quan trọng: để hai app dùng chung dữ liệu
-Hai gói chứa cùng backend và cùng API. **Không triển khai thành hai dịch vụ độc lập nếu muốn xu, key, nhiệm vụ và mã giảm giá đồng bộ.** Chọn một dịch vụ backend duy nhất để lưu `data.json` và file upload; dùng cả hai giao diện `/getkey/` và `/customer/` trên cùng host. Đặt `APP_HOME` để chọn trang mặc định. Nếu nền tảng hosting xóa filesystem khi redeploy, hãy gắn persistent disk; `data.json` hiện là JSON local, chưa phải database managed.
+## Lưu ý đồng bộ 2 app
+Hai ZIP có cùng API và cấu trúc dữ liệu. Để xu, coupon, nhiệm vụ, key và quyền phòng file đồng bộ thật, **chỉ triển khai một máy chủ backend duy nhất** rồi cho cả hai app dùng chung URL/host đó (các đường dẫn `/customer/` và `/getkey/` cùng trên host). Nếu triển khai hai máy chủ độc lập, `data.json` tách biệt và dữ liệu không tự đồng bộ.
 
-## Cấu hình cần thiết để dùng thực tế
-- Facebook: `FACEBOOK_PAGE_ACCESS_TOKEN` có quyền phù hợp; checker chỉ xác minh những Page/API cho phép.
-- TikTok: cấu hình endpoint provider hợp lệ trong `TIKTOK_LIVE_CHECK_URL` và API key nếu cần. Không có các cấu hình này, checker sẽ báo chưa cấu hình/không xác định, không bịa LIVE/DIE.
-- Upload phòng file giới hạn 20 MB. Admin: `/admin-door/`.
-- Nhiệm vụ cộng xu sau khi admin duyệt bằng chứng.
-- Mã giảm giá hiện được kiểm tra và đánh dấu đã dùng theo phiên; chưa có cổng thanh toán tự động hoặc tài khoản người dùng riêng. Chỉ mở bán công khai sau khi tích hợp database bền vững, xác thực tài khoản và cổng thanh toán.
-- Giá file mặc định 300.000₫/file. Không tích hợp chức năng spam tin nhắn hoặc báo cáo hàng loạt.
+## Cấu hình tích hợp
+- Facebook LIVE check cần `FACEBOOK_PAGE_ACCESS_TOKEN` có quyền phù hợp với Page.
+- TikTok checker cần `TIKTOK_LIVE_CHECK_URL` của nhà cung cấp hợp lệ.
+- Cổng thanh toán chưa được kết nối; giá 300.000₫/file và giá key là giá quản trị ghi nhận, không chứng minh giao dịch đã thanh toán. Coupon hiện được kiểm tra/đánh dấu dùng một lần theo phiên đăng nhập; cần tài khoản người dùng thật và payment gateway nếu mở bán công khai.
+- Nhiệm vụ được cộng xu sau khi admin xem bằng chứng và duyệt thủ công; không tự động đăng bài hay tạo tương tác giả.
+- Phòng file admin upload giới hạn 20 MB, cần đổi mật khẩu mặc định trước khi đưa lên mạng.
+- Phòng công cụ chỉ là khu phân phối file; gói này không tích hợp tự động spam tin nhắn hoặc báo cáo hàng loạt.
